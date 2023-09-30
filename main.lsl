@@ -17,7 +17,7 @@ default
     }
      state_entry()
     {
-         llSleep(llFrand(5));
+         llSleep(0.7); //sleep for a lil bit <3
          llSetTimerEvent(hailtimer);
     }
      timer()
