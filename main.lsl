@@ -6,7 +6,7 @@ float STEP = 0.05;
 float TICK = 0.10;
 
 vector rgb = <0.0, 1.0, 0.0>; // start green
-integer phase = 0;            // 0:R up, 1:G down, 2:B up, 3:R down, 4:G up, 5:B down
+integer phase = 4;            // 0:R up, 1:G down, 2:B up, 3:R down, 4:G up, 5:B down
 
 default
 {
