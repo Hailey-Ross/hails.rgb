@@ -10,13 +10,8 @@ integer phase = 0;            // 0:R up, 1:G down, 2:B up, 3:R down, 4:G up, 5:B
 
 string settext;
 
-// Light settings
-float L_INTENSITY = 1.0;
-float L_RADIUS    = 10.0;
-float L_FALLOFF   = 0.75;
-
-// How often to re-check Description (every N timer ticks)
-integer DESC_REFRESH_TICKS = 20; // 20 * 0.10s = every 2 seconds
+// How often to re-check Description (every X timer ticks)
+integer DESC_REFRESH_TICKS = 100; // 100 * 0.10s = every 10 seconds
 integer descCounter = 0;
 
 default
@@ -36,9 +31,6 @@ default
         llSetTimerEvent(TICK);
 
         llSetText(settext, rgb, 1.0);
-        llSetPrimitiveParams([
-            PRIM_POINT_LIGHT, TRUE, rgb, L_INTENSITY, L_RADIUS, L_FALLOFF
-        ]);
     }
 
     timer()
