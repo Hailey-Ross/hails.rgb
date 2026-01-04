@@ -5,12 +5,13 @@
 float STEP = 0.05;
 float TICK = 0.10;
 
+integer randomStart = TRUE;   // randomize start time to avoid syncing up scripts
 vector rgb = <0.0, 1.0, 0.0>; // start green
 integer phase = 4;            // 0:R up, 1:G down, 2:B up, 3:R down, 4:G up, 5:B down
 
 // Light settings (tweak these!)
 float L_INTENSITY = 0.6;  // 0.0 - 1.0
-float L_RADIUS    = 3.0; // meters
+float L_RADIUS    = 2.4; // meters
 float L_FALLOFF   = 0.75; // 0.0 - 2.0-ish
 
 default
@@ -24,7 +25,7 @@ default
 
     state_entry()
     {
-        llSleep(llFrand(5.0));
+        if (randomStart) { llSleep(llFrand(5.0)); }
         llSetTimerEvent(TICK);
     }
 
@@ -38,9 +39,6 @@ default
         else { rgb.z -= STEP; if (rgb.z <= 0.0) { rgb.z = 0.0; phase = 0; } }
 
         // Update surface color + point light color to match
-        llSetPrimitiveParams([
-            PRIM_COLOR, ALL_SIDES, rgb, 1.0,
-            PRIM_POINT_LIGHT, TRUE, rgb, L_INTENSITY, L_RADIUS, L_FALLOFF
-        ]);
+        llSetPrimitiveParams([PRIM_COLOR, ALL_SIDES, rgb, 1.0, PRIM_POINT_LIGHT, TRUE, rgb, L_INTENSITY, L_RADIUS, L_FALLOFF]);
     }
 }
