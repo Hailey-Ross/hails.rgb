@@ -1,3 +1,7 @@
+// Script Created by Hailey Enfield
+// Site: https://links.hails.cc/
+// Github: https://github.com/Hailey-Ross/hails.rgb
+// PLEASE LEAVE ALL CREDITS/COMMENTS INTACT
 float STEP = 0.05;
 float TICK = 0.10;
 
