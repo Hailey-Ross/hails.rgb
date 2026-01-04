@@ -25,30 +25,12 @@ default
 
     timer()
     {
-        if (phase == 0) { // Red up
-            rgb.x += STEP;
-            if (rgb.x >= 1.0) { rgb.x = 1.0; phase = 1; }
-        }
-        else if (phase == 1) { // Green down
-            rgb.y -= STEP;
-            if (rgb.y <= 0.0) { rgb.y = 0.0; phase = 2; }
-        }
-        else if (phase == 2) { // Blue up
-            rgb.z += STEP;
-            if (rgb.z >= 1.0) { rgb.z = 1.0; phase = 3; }
-        }
-        else if (phase == 3) { // Red down
-            rgb.x -= STEP;
-            if (rgb.x <= 0.0) { rgb.x = 0.0; phase = 4; }
-        }
-        else if (phase == 4) { // Green up
-            rgb.y += STEP;
-            if (rgb.y >= 1.0) { rgb.y = 1.0; phase = 5; }
-        }
-        else { // phase == 5, Blue down
-            rgb.z -= STEP;
-            if (rgb.z <= 0.0) { rgb.z = 0.0; phase = 0; }
-        }
+        if (phase == 0) { rgb.x += STEP; if (rgb.x >= 1.0) { rgb.x = 1.0; phase = 1; } }
+        else if (phase == 1) { rgb.y -= STEP; if (rgb.y <= 0.0) { rgb.y = 0.0; phase = 2; } }
+        else if (phase == 2) { rgb.z += STEP; if (rgb.z >= 1.0) { rgb.z = 1.0; phase = 3; } }
+        else if (phase == 3) { rgb.x -= STEP; if (rgb.x <= 0.0) { rgb.x = 0.0; phase = 4; } }
+        else if (phase == 4) { rgb.y += STEP; if (rgb.y >= 1.0) { rgb.y = 1.0; phase = 5; } }
+        else { rgb.z -= STEP; if (rgb.z <= 0.0) { rgb.z = 0.0; phase = 0; } }
 
         llSetColor(rgb, ALL_SIDES);
     }
