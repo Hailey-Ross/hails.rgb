@@ -9,8 +9,8 @@ vector rgb = <0.0, 1.0, 0.0>; // start green
 integer phase = 0;            // 0:R up, 1:G down, 2:B up, 3:R down, 4:G up, 5:B down
 
 // Light settings (tweak these!)
-float L_INTENSITY = 1.0;  // 0.0 - 1.0
-float L_RADIUS    = 10.0; // meters
+float L_INTENSITY = 0.6;  // 0.0 - 1.0
+float L_RADIUS    = 3.0; // meters
 float L_FALLOFF   = 0.75; // 0.0 - 2.0-ish
 
 default
