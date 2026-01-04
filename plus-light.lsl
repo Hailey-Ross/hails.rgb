@@ -1,66 +1,46 @@
-float hailRed = 0;
-float hailGrn = 1;
-float hailBlu = 0;
-float hailtimer = 0.000000001;
-string color = "hailsRedUp";
-vector hailsColors;
+// Script Created by Hailey Enfield
+// Site: https://links.hails.cc/
+// Github: https://github.com/Hailey-Ross/hails.rgb
+// PLEASE LEAVE ALL CREDITS/COMMENTS INTACT
+float STEP = 0.05;
+float TICK = 0.10;
+
+vector rgb = <0.0, 1.0, 0.0>; // start green
+integer phase = 0;            // 0:R up, 1:G down, 2:B up, 3:R down, 4:G up, 5:B down
+
+// Light settings (tweak these!)
+float L_INTENSITY = 1.0;  // 0.0 - 1.0
+float L_RADIUS    = 10.0; // meters
+float L_FALLOFF   = 0.75; // 0.0 - 2.0-ish
 
 default
 {
-     on_rez(integer start_param)
+    on_rez(integer p) { llResetScript(); }
+
+    changed(integer c)
     {
-         llResetScript();
+        if (c & CHANGED_OWNER) llResetScript();
     }
-     changed(integer change)
+
+    state_entry()
     {
-        if (change & CHANGED_OWNER)
-            llResetScript();
+        llSleep(llFrand(5.0));
+        llSetTimerEvent(TICK);
     }
-     state_entry()
+
+    timer()
     {
-         llSleep(llFrand(5));
-         llSetTimerEvent(hailtimer);
-    }
-     timer()
-    {
-            if(color == "hailsRedUp"){
-                if(hailRed <= 1){
-                    hailRed += 0.05;
-                }else{
-                    color = "hailsGrnDown";
-                }
-            }else if(color == "hailsRedDown"){
-                 if(hailRed >= 0){
-                    hailRed -= 0.05;
-                }else{
-                    color = "hailsGrnUp";
-                }  
-            }else if(color == "hailsGrnUp"){
-                if(hailGrn <= 1){
-                    hailGrn += 0.05;
-                }else{
-                    color = "hailsBluDown";
-                }   
-            }else if(color == "hailsGrnDown"){
-               if(hailGrn>=0){
-                    hailGrn -= 0.05;
-                }else{
-                    color = "hailsBluUp";
-                }   
-            }else if(color == "hailsBluUp"){
-                 if(hailBlu<=1){
-                    hailBlu += 0.05;
-                }else{
-                    color = "hailsRedDown";
-                }   
-            }else if(color == "hailsBluDown"){
-                if(hailBlu>=0){
-                    hailBlu -= 0.05;
-                }else{
-                    color = "hailsRedUp";
-                }   
-            }
-        hailsColors = <hailRed, hailGrn, hailBlu>;
-        llSetPrimitiveParams([PRIM_POINT_LIGHT,TRUE,llsRGB2Linear(hailsColors),0.45,5,0.5, PRIM_COLOR, ALL_SIDES, <hailRed, hailGrn, hailBlu>, 1.0]); 
+        if (phase == 0) { rgb.x += STEP; if (rgb.x >= 1.0) { rgb.x = 1.0; phase = 1; } }
+        else if (phase == 1) { rgb.y -= STEP; if (rgb.y <= 0.0) { rgb.y = 0.0; phase = 2; } }
+        else if (phase == 2) { rgb.z += STEP; if (rgb.z >= 1.0) { rgb.z = 1.0; phase = 3; } }
+        else if (phase == 3) { rgb.x -= STEP; if (rgb.x <= 0.0) { rgb.x = 0.0; phase = 4; } }
+        else if (phase == 4) { rgb.y += STEP; if (rgb.y >= 1.0) { rgb.y = 1.0; phase = 5; } }
+        else { rgb.z -= STEP; if (rgb.z <= 0.0) { rgb.z = 0.0; phase = 0; } }
+
+        // Update surface color + point light color to match
+        llSetPrimitiveParams([
+            PRIM_COLOR, ALL_SIDES, rgb, 1.0,
+            PRIM_POINT_LIGHT, TRUE, rgb, L_INTENSITY, L_RADIUS, L_FALLOFF
+        ]);
     }
 }
