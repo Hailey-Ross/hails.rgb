@@ -5,6 +5,7 @@
 float STEP = 0.05;
 float TICK = 0.10;
 
+integer randomStart = TRUE;   // randomize start time to avoid syncing up scripts
 vector rgb = <0.0, 1.0, 0.0>; // start green
 integer phase = 4;            // 0:R up, 1:G down, 2:B up, 3:R down, 4:G up, 5:B down
 
@@ -27,7 +28,7 @@ default
     state_entry()
     {
         settext = llGetObjectDesc();
-        llSleep(llFrand(5.0));
+        if (randomStart) { llSleep(llFrand(5.0)); }
         llSetTimerEvent(TICK);
 
         llSetText(settext, rgb, 1.0);
